@@ -1,5 +1,7 @@
 import numpy as np
 import control as ct
+from scipy.signal import square
+from scipy.signal import sawtooth
 
 # Przykładowe współczynniki transmitancji
 a1, a0 = 2.0, 1.0   # licznik
@@ -34,3 +36,13 @@ print("Macierz A:\n", A)
 print("Macierz B:\n", B)
 print("Macierz C:\n", C)
 print("Macierz D:\n", D)
+
+t = 0.1 # krok symulacji 
+T = np.linspace(0, t, 10) # wektor czasu
+duty_cycle = 0.5 # współczynnik wypełnienia dla prostokątnego sygnału
+f = 1.0  # częstotliwość w Hz
+phi = np.pi / 2 # faza w radianach (aktualnie 90 stopni)
+Rsin = np.sin(2 * np.pi * f * T + phi)
+Rprostokotny = square(2 * np.pi * f * T + phi, duty=duty_cycle)  # squre generije sygnal o wartosciach 1 i -1 spytac czy ma być 0 i 1 
+Rtrojkatny = sawtooth(2 * np.pi * f * T + phi, width=0.5)  # sygnał trójkątny z częstotliwością f i przesunięciem fazowym phi
+
