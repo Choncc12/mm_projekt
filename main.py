@@ -2,10 +2,14 @@ import numpy as np
 import control as ct
 from scipy.signal import square
 from scipy.signal import sawtooth
+#testy
+import matplotlib.pyplot as plt  # Dodaj import na początku pliku
 
 # Przykładowe współczynniki transmitancji
 a1, a0 = 2.0, 1.0   # licznik
 b2, b1, b0 = 1.0, 3.0, 2.0  # mianownik
+#TODO: sprawdzanie stablilności
+#TODO: samodzielne wyprowadznie moaciezy A, B, C, D(na kartce) 
 
 # Licznik i mianownik transmitancji Gp(s)
 Gp_licznik = [a1, a0]
@@ -37,12 +41,45 @@ print("Macierz B:\n", B)
 print("Macierz C:\n", C)
 print("Macierz D:\n", D)
 
-t = 0.1 # krok symulacji 
-T = np.linspace(0, t, 10) # wektor czasu
+dt = 0.1 # krok symulacji 
+tmax = 10 # czas symulacji
+T = np.linspace(0, dt, tmax) # wektor czasu
 duty_cycle = 0.5 # współczynnik wypełnienia dla prostokątnego sygnału
+# Liczba elementów w wektorze T
+num_elements = len(T)
+
 f = 1.0  # częstotliwość w Hz
 phi = np.pi / 2 # faza w radianach (aktualnie 90 stopni)
-Rsin = np.sin(2 * np.pi * f * T + phi)
-Rprostokotny = square(2 * np.pi * f * T + phi, duty=duty_cycle)  # squre generije sygnal o wartosciach 1 i -1 spytac czy ma być 0 i 1 
-Rtrojkatny = sawtooth(2 * np.pi * f * T + phi, width=0.5)  # sygnał trójkątny z częstotliwością f i przesunięciem fazowym phi
+Usin = np.sin(2 * np.pi * f * T + phi)
+Uprostokotny = square(2 * np.pi * f * T + phi, duty=duty_cycle)  # squre generije sygnal o wartosciach 1 i -1 spytac czy ma być 0 i 1 
+Utrojkatny = sawtooth(2 * np.pi * f * T + phi, width=0.5)  # sygnał trójkątny z częstotliwością f i przesunięciem fazowym phi
 
+A = dt * A
+B = dt * B
+U = Usin
+# Zerowe warunki początkowe
+X = np.zeros((A.shape[0], 1))  # Wektor stanu
+Xp = np.zeros((A.shape[0], 1))  # Wektor pomocniczy
+#testy
+U = np.ones((num_elements, 1))   
+Ystate_values = []
+for i in range(num_elements-1):
+    #krok próbny
+    Xp = Xp + A @ Xp + B * U[i]
+    #krok wlaściwy
+    X = Xp + 0.5 * (A @ X + B * U[i]  + A @ Xp + B * U[i+1])
+    Ystate = C @ X + D * U[i]
+    #testy
+    Ystate_values.append(Ystate.item())  # Dodaj wynik do tablicy
+
+
+
+
+
+# Rysowanie wykresu
+plt.plot(T[:-1], Ystate_values)  # Dopasuj długość T do wyników
+plt.xlabel('Czas [s]')
+plt.ylabel('Ystate')
+plt.title('Wykres Ystate w funkcji czasu')
+plt.grid()
+plt.show()
