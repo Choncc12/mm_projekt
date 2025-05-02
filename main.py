@@ -18,7 +18,7 @@ Gp_mianownik = [b2, b1, b0]
 # Tworzenie obiektu transmitancji
 Gp = ct.tf(Gp_licznik, Gp_mianownik)
 
-Kp, Ki = 1.5, 0.5  # Przykładowe wartości regulatora PI
+Kp, Ki = 1., 1.  # Przykładowe wartości regulatora PI
 
 # Licznik i mianownik PI
 Gc_licznik = [Kp, Ki]
@@ -31,7 +31,8 @@ Gc = ct.tf(Gc_licznik, Gc_mianownik)
 Go = ct.series(Gc, Gp)
 
 Gz = ct.feedback(Go, 1)
-
+if max(np.roots(Gz.den[0][0])) < 0:
+    print("Układ jest stabilny")
 
 # Przekształcenie na model stanu
 ss_model = ct.tf2ss(Gz)
@@ -41,14 +42,14 @@ print("Macierz B:\n", B)
 print("Macierz C:\n", C)
 print("Macierz D:\n", D)
 
-dt = 0.1 # krok symulacji 
-tmax = 10 # czas symulacji
+dt = 0.01 # krok symulacji 
+tmax = 1000 # czas symulacji
 T = np.linspace(0, dt, tmax) # wektor czasu
 duty_cycle = 0.5 # współczynnik wypełnienia dla prostokątnego sygnału
 # Liczba elementów w wektorze T
 num_elements = len(T)
 
-f = 1.0  # częstotliwość w Hz
+f = 100.  # częstotliwość w Hz
 phi = np.pi / 2 # faza w radianach (aktualnie 90 stopni)
 Usin = np.sin(2 * np.pi * f * T + phi)
 Uprostokotny = square(2 * np.pi * f * T + phi, duty=duty_cycle)  # squre generije sygnal o wartosciach 1 i -1 spytac czy ma być 0 i 1 
