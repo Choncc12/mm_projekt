@@ -1,6 +1,9 @@
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QPushButton, QGridLayout
+    QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QPushButton, QGridLayout, QHBoxLayout
 )
+from PyQt6.QtCore import Qt
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
 import sys
 
 class MainWindow(QMainWindow):
@@ -11,51 +14,54 @@ class MainWindow(QMainWindow):
         # Główne okno
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
-        layout = QGridLayout()
+        layout = QVBoxLayout()
         central_widget.setLayout(layout)
 
-        # Pola do edycji współczynników transmitancji Gp
-        layout.addWidget(QLabel("Transmitancja Gp - licznik:"), 0, 0)
-        self.gp_licznik_input = QLineEdit("2.0, 1.0")  # Domyślne wartości
-        layout.addWidget(self.gp_licznik_input, 0, 1)
+        # Parametry wejściowe
+        input_layout = QGridLayout()
+        layout.addLayout(input_layout)
 
-        layout.addWidget(QLabel("Transmitancja Gp - mianownik:"), 1, 0)
-        self.gp_mianownik_input = QLineEdit("1.0, 3.0, 2.0")  # Domyślne wartości
-        layout.addWidget(self.gp_mianownik_input, 1, 1)
+        input_layout.addWidget(QLabel("Transmitancja Gp - licznik:"), 0, 0)
+        self.gp_licznik_input = QLineEdit("2.0, 1.0")
+        input_layout.addWidget(self.gp_licznik_input, 0, 1)
 
-        # Pola do edycji nastaw regulatora PI
-        layout.addWidget(QLabel("Regulator PI - Kp:"), 2, 0)
-        self.kp_input = QLineEdit("1.0")  # Domyślne wartości
-        layout.addWidget(self.kp_input, 2, 1)
+        input_layout.addWidget(QLabel("Transmitancja Gp - mianownik:"), 1, 0)
+        self.gp_mianownik_input = QLineEdit("1.0, 3.0, 2.0")
+        input_layout.addWidget(self.gp_mianownik_input, 1, 1)
 
-        layout.addWidget(QLabel("Regulator PI - Ki:"), 3, 0)
-        self.ki_input = QLineEdit("1.0")  # Domyślne wartości
-        layout.addWidget(self.ki_input, 3, 1)
+        input_layout.addWidget(QLabel("Regulator PI - Kp:"), 2, 0)
+        self.kp_input = QLineEdit("1.0")
+        input_layout.addWidget(self.kp_input, 2, 1)
 
-        # Pola do edycji parametrów sygnałów wejściowych
-        layout.addWidget(QLabel("Częstotliwość sygnału [Hz]:"), 4, 0)
-        self.freq_input = QLineEdit("100.0")  # Domyślne wartości
-        layout.addWidget(self.freq_input, 4, 1)
+        input_layout.addWidget(QLabel("Regulator PI - Ki:"), 3, 0)
+        self.ki_input = QLineEdit("1.0")
+        input_layout.addWidget(self.ki_input, 3, 1)
 
-        layout.addWidget(QLabel("Faza sygnału [rad]:"), 5, 0)
-        self.phase_input = QLineEdit("1.57")  # Domyślne wartości
-        layout.addWidget(self.phase_input, 5, 1)
+        input_layout.addWidget(QLabel("Częstotliwość sygnału [Hz]:"), 4, 0)
+        self.freq_input = QLineEdit("100.0")
+        input_layout.addWidget(self.freq_input, 4, 1)
 
-        # Pola do edycji czasu i kroku symulacji
-        layout.addWidget(QLabel("Czas symulacji [s]:"), 6, 0)
-        self.tmax_input = QLineEdit("1000")  # Domyślne wartości
-        layout.addWidget(self.tmax_input, 6, 1)
+        input_layout.addWidget(QLabel("Faza sygnału [rad]:"), 5, 0)
+        self.phase_input = QLineEdit("1.57")
+        input_layout.addWidget(self.phase_input, 5, 1)
 
-        layout.addWidget(QLabel("Krok symulacji [s]:"), 7, 0)
-        self.dt_input = QLineEdit("0.01")  # Domyślne wartości
-        layout.addWidget(self.dt_input, 7, 1)
+        input_layout.addWidget(QLabel("Czas symulacji [s]:"), 6, 0)
+        self.tmax_input = QLineEdit("1000")
+        input_layout.addWidget(self.tmax_input, 6, 1)
+
+        input_layout.addWidget(QLabel("Krok symulacji [s]:"), 7, 0)
+        self.dt_input = QLineEdit("0.01")
+        input_layout.addWidget(self.dt_input, 7, 1)
 
         # Przycisk do uruchomienia symulacji
         self.run_button = QPushButton("Uruchom symulację")
-        layout.addWidget(self.run_button, 8, 0, 1, 2)
-
-        # Połączenie przycisku z funkcją
+        layout.addWidget(self.run_button)
         self.run_button.clicked.connect(self.run_simulation)
+
+        # Wykresy
+        self.figure = Figure()
+        self.canvas = FigureCanvas(self.figure)
+        layout.addWidget(self.canvas)
 
     def run_simulation(self):
         # Pobieranie danych z pól tekstowych
@@ -70,7 +76,17 @@ class MainWindow(QMainWindow):
 
         # Przekazywanie danych do main.py
         from main import run_simulation
-        run_simulation(a1, a0, b2, b1, b0, kp, ki, freq, phase, tmax, dt)
+        time, input_signal, output_signal = run_simulation(a1, a0, b2, b1, b0, kp, ki, freq, phase, tmax, dt)
+
+        # Rysowanie wykresów
+        self.figure.clear()
+        ax = self.figure.add_subplot(111)
+        ax.plot(time, input_signal, label="Sygnał wejściowy")
+        ax.plot(time, output_signal, label="Odpowiedź układu")
+        ax.set_xlabel("Czas [s]")
+        ax.set_ylabel("Amplituda")
+        ax.legend()
+        self.canvas.draw()
 
 # Uruchamianie aplikacji
 if __name__ == "__main__":
