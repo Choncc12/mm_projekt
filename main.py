@@ -15,7 +15,7 @@ def run_simulation(a1, a0, b2, b1, b0, Kp, Ki, f, phi, tmax, dt,):
     # Tworzenie obiektu transmitancji
     Gp = ct.tf(Gp_licznik, Gp_mianownik)
 
-    Kp, Ki = 1., 1.  # Przykładowe wartości regulatora PI
+    
 
     # Licznik i mianownik PI
     Gc_licznik = [Kp, Ki]
@@ -35,16 +35,13 @@ def run_simulation(a1, a0, b2, b1, b0, Kp, Ki, f, phi, tmax, dt,):
     ss_model = ct.tf2ss(Gz)
     A, B, C, D = ss_model.A, ss_model.B, ss_model.C, ss_model.D
    
-    dt = 0.01 # krok symulacji 
-    tmax = 1000 # czas symulacji
     T = np.arange(0, tmax, dt) # wektor czasu
-    duty_cycle = 0.5 # współczynnik wypełnienia dla prostokątnego sygnału
+    
     # Liczba elementów w wektorze T
     num_elements = len(T)
 
-    f = 100.  # częstotliwość w Hz
-    phi = np.pi / 2 # faza w radianach (aktualnie 90 stopni)
-    
+    phi = np.radians(phi)  # faza w radianach (aktualnie 90 stopni)
+    duty_cycle = 0.5  # współczynnik wypełnienia dla sygnału prostokątnego
     Usin = np.sin(2 * np.pi * f * T + phi)
     Uprostokotny = square(2 * np.pi * f * T + phi, duty=duty_cycle)  # squre generije sygnal o wartosciach 1 i -1 spytac czy ma być 0 i 1 
     Utrojkatny = sawtooth(2 * np.pi * f * T + phi, width=0.5)  # sygnał trójkątny z częstotliwością f i przesunięciem fazowym phi
