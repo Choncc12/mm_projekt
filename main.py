@@ -1,4 +1,4 @@
-def run_simulation(a1, a0, b2, b1, b0, Kp, Ki, f, phi, tmax, dt,):
+def run_simulation(a1, a0, b2, b1, b0, Kp, Ki, signal_type, f, phi, tmax, dt,):
     import numpy as np
     import control as ct
     from scipy.signal import square
@@ -43,7 +43,7 @@ def run_simulation(a1, a0, b2, b1, b0, Kp, Ki, f, phi, tmax, dt,):
     phi = np.radians(phi)  # faza w radianach (aktualnie 90 stopni)
     duty_cycle = 0.5  # współczynnik wypełnienia dla sygnału prostokątnego
     Usin = np.sin(2 * np.pi * f * T + phi)
-    Uprostokotny = square(2 * np.pi * f * T + phi, duty=duty_cycle)  # squre generije sygnal o wartosciach 1 i -1 spytac czy ma być 0 i 1 
+    Uprostokotny = square(2 * np.pi * f * T + phi, duty=duty_cycle)/2+0.5  # squre generuje sygnal o wartosciach 1 i -1 spytac czy ma być 0 i 1 
     Utrojkatny = sawtooth(2 * np.pi * f * T + phi, width=0.5)  # sygnał trójkątny z częstotliwością f i przesunięciem fazowym phi
     
     A = dt * A
@@ -53,6 +53,15 @@ def run_simulation(a1, a0, b2, b1, b0, Kp, Ki, f, phi, tmax, dt,):
     Xp = np.zeros((A.shape[0], 1))  # Wektor pomocniczy
     #testy
     U = np.ones((num_elements, 1))
+    if signal_type == 0:  # Sinusoidalny
+        U = Usin
+    elif signal_type == 1:  # Prostokątny
+        U = Uprostokotny
+    elif signal_type == 2:  # Trójkątny
+        U = Utrojkatny
+    else:
+        raise ValueError("Nieznany typ sygnału wejściowego")
+    # Inicjalizacja sygnałów
     input_signal = U   
     output_signal = []
     for i in range(num_elements-1):

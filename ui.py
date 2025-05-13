@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QPushButton, QGridLayout, QHBoxLayout
+    QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QPushButton, QGridLayout, QHBoxLayout, QComboBox
 )
 from PyQt6.QtCore import Qt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -37,21 +37,26 @@ class MainWindow(QMainWindow):
         self.ki_input = QLineEdit("1.0")
         input_layout.addWidget(self.ki_input, 3, 1)
 
-        input_layout.addWidget(QLabel("Częstotliwość sygnału [Hz]:"), 4, 0)
+        input_layout.addWidget(QLabel("Typ sygnału wejściowego:"), 4, 0)
+        self.signal_type_combo = QComboBox()
+        self.signal_type_combo.addItems(["Sinusoidalny", "Prostokątny", "Trójkątny"])
+        input_layout.addWidget(self.signal_type_combo, 4, 1)
+
+        input_layout.addWidget(QLabel("Częstotliwość sygnału [Hz]:"), 5, 0)
         self.freq_input = QLineEdit("100.0")
-        input_layout.addWidget(self.freq_input, 4, 1)
+        input_layout.addWidget(self.freq_input, 5, 1)
 
-        input_layout.addWidget(QLabel("Faza sygnału [rad]:"), 5, 0)
+        input_layout.addWidget(QLabel("Faza sygnału [rad]:"), 6, 0)
         self.phase_input = QLineEdit("1.57")
-        input_layout.addWidget(self.phase_input, 5, 1)
+        input_layout.addWidget(self.phase_input, 6, 1)
 
-        input_layout.addWidget(QLabel("Czas symulacji [s]:"), 6, 0)
-        self.tmax_input = QLineEdit("1000")
-        input_layout.addWidget(self.tmax_input, 6, 1)
+        input_layout.addWidget(QLabel("Czas symulacji [s]:"), 7, 0)
+        self.tmax_input = QLineEdit("10")
+        input_layout.addWidget(self.tmax_input, 7, 1)
 
-        input_layout.addWidget(QLabel("Krok symulacji [s]:"), 7, 0)
+        input_layout.addWidget(QLabel("Krok symulacji [s]:"), 8, 0)
         self.dt_input = QLineEdit("0.01")
-        input_layout.addWidget(self.dt_input, 7, 1)
+        input_layout.addWidget(self.dt_input, 8, 1)
 
         # Przycisk do uruchomienia symulacji
         self.run_button = QPushButton("Uruchom symulację")
@@ -69,6 +74,7 @@ class MainWindow(QMainWindow):
         b2, b1, b0 = map(float, self.gp_mianownik_input.text().split(","))
         kp = float(self.kp_input.text())
         ki = float(self.ki_input.text())
+        signal_type = self.signal_type_combo.currentIndex()
         freq = float(self.freq_input.text())
         phase = float(self.phase_input.text())
         tmax = float(self.tmax_input.text())
@@ -76,7 +82,7 @@ class MainWindow(QMainWindow):
 
         # Przekazywanie danych do main.py
         from main import run_simulation
-        time, input_signal, output_signal = run_simulation(a1, a0, b2, b1, b0, kp, ki, freq, phase, tmax, dt)
+        time, input_signal, output_signal = run_simulation(a1, a0, b2, b1, b0, kp, ki, signal_type, freq, phase, tmax, dt)
 
         # Rysowanie wykresów
         self.figure.clear()
