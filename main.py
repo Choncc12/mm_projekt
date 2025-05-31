@@ -6,74 +6,68 @@ def run_simulation(a1, a0, b2, b1, b0, Kp, Ki, signal_type, f, phi, tmax, dt,):
     
 
 
-    #TODO: samodzielne wyprowadznie moaciezy A, B, C, D(na kartce) 
 
-    # Licznik i mianownik transmitancji Gp(s)
+
+
     Gp_licznik = [a1, a0]
     Gp_mianownik = [b2, b1, b0]
-
-    # Tworzenie obiektu transmitancji
     Gp = ct.tf(Gp_licznik, Gp_mianownik)
-
-    
-
-    # Licznik i mianownik PI
     Gc_licznik = [Kp, Ki]
-    Gc_mianownik = [1, 0]  # odpowiada 1/s
+    Gc_mianownik = [1, 0]  
 
-    # Transmitancja PI
+
     Gc = ct.tf(Gc_licznik, Gc_mianownik)
-
-    # Połączenie szeregowe: C(s) * G(s)
     Go = ct.series(Gc, Gp)
-
     Gz = ct.feedback(Go, 1)
+    
     if max(np.roots(Gz.den[0][0])) < 0:
         print("Układ jest stabilny")
 
-    # Przekształcenie na model stanu
+ 
     ss_model = ct.tf2ss(Gz)
     A, B, C, D = ss_model.A, ss_model.B, ss_model.C, ss_model.D
    
     T = np.arange(0, tmax, dt) # wektor czasu
     
-    # Liczba elementów w wektorze T
+
     num_elements = len(T)
 
-    phi = np.radians(phi)  # faza w radianach (aktualnie 90 stopni)
-    duty_cycle = 0.5  # współczynnik wypełnienia dla sygnału prostokątnego
+    phi = np.radians(phi)  
+    duty_cycle = 0.5  
     Usin = np.sin(2 * np.pi * f * T + phi)
-    Uprostokotny = square(2 * np.pi * f * T + phi, duty=duty_cycle)/2+0.5  # squre generuje sygnal o wartosciach 1 i -1 spytac czy ma być 0 i 1 
-    Utrojkatny = sawtooth(2 * np.pi * f * T + phi, width=0.5)  # sygnał trójkątny z częstotliwością f i przesunięciem fazowym phi
+    Uprostokotny = square(2 * np.pi * f * T + phi, duty=duty_cycle)/2+0.5  
+    Utrojkatny = sawtooth(2 * np.pi * f * T + phi, width=0.5)  
     
     A = dt * A
     B = dt * B
-    # Zerowe warunki początkowe
-    X = np.zeros((A.shape[0], 1))  # Wektor stanu
-    Xp = np.zeros((A.shape[0], 1))  # Wektor pomocniczy
-    #testy
+  
+    X = np.zeros((A.shape[0], 1))  
+    Xp = np.zeros((A.shape[0], 1))  
+   
     U = np.ones((num_elements, 1))
-    if signal_type == 0:  # Sinusoidalny
+    if signal_type == 0:  
         U = Usin
-    elif signal_type == 1:  # Prostokątny
+    elif signal_type == 1:  
         U = Uprostokotny
-    elif signal_type == 2:  # Trójkątny
+    elif signal_type == 2:  
         U = Utrojkatny
     else:
         raise ValueError("Nieznany typ sygnału wejściowego")
+    
     # Inicjalizacja sygnałów
     input_signal = U   
     output_signal = []
+    
     for i in range(num_elements-1):
         #krok próbny
         Xp = Xp + A @ Xp + B * U[i]
-        #krok wlaściwy
+        #krok właściwy
         X = Xp + 0.5 * (A @ X + B * U[i]  + A @ Xp + B * U[i+1])
-        Ystate = C @ X + D * U[i]
-        output_signal.append(Ystate.item())  # Dodaj wynik do tablicy
+        Y = C @ X + D * U[i]
+        output_signal.append(Y.item())  
  
- # Dodanie ostatniego punktu do output_signal
-    Ystate = C @ X + D * input_signal[-1]
-    output_signal.append(Ystate.item())
+    # Dodanie ostatniego punktu do output_signal
+    Y = C @ X + D * input_signal[-1]
+    output_signal.append(Y.item())
 
     return T, input_signal, output_signal

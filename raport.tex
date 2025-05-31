@@ -43,7 +43,23 @@ Aplikacja została napisana w języku Python z użyciem bibliotek PyQt6 oraz Mat
 \end{itemize}
 
 \section{Opis działania programu}
-Po uruchomieniu programu użytkownik wprowadza parametry, wybiera typ sygnału i uruchamia symulację. Program oblicza odpowiedź układu w dziedzinie czasu, korzystając z modelu stanu oraz wybranego sygnału wejściowego.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{wykres2.png}
+    \caption{Po przekazaniu do funkcji run\_simulation są tworzone poszczególne transmitancje, są łączone szeregowo i zamykane w ujemnej pętli sprzężenia zwrotnego. W ten sposób otrzymujemy transmitancję całego układu.}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{model.png}
+    \caption{Transmitancja całego układu jest następnie przekształcana na model stanowy.}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{pentla.png}
+    \caption{Rozwiązywanie równań stanu jest realizowane przy pomocy metody Tustina.}
+\end{figure}
 
 \section{Przykładowe wyniki}
 \begin{figure}[h!]
@@ -52,7 +68,17 @@ Po uruchomieniu programu użytkownik wprowadza parametry, wybiera typ sygnału i
     \caption{Przykładowa odpowiedź układu na sygnał sinusoidalny.}
 \end{figure}
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{wykres3.png}
+    \caption{Przykładowa odpowiedź układu na sygnał prostokątny. Ilustracja przeregulowania.}
+\end{figure}
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{wykres5.png}
+    \caption{Przykładowa odpowiedź układu na sygnał trójkątny.}
+\end{figure}
 
 \section{Wnioski}
 Projekt pozwolił na praktyczne zastosowanie wiedzy z zakresu teorii sterowania oraz programowania. Aplikacja umożliwia szybkie testowanie wpływu parametrów na odpowiedź układu.
