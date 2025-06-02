@@ -81,7 +81,10 @@ Aplikacja została napisana w języku Python z użyciem bibliotek PyQt6 oraz Mat
 \end{figure}
 
 \section{Wnioski}
-Projekt pozwolił na praktyczne zastosowanie wiedzy z zakresu teorii sterowania oraz programowania. Aplikacja umożliwia szybkie testowanie wpływu parametrów na odpowiedź układu.
+Wykorzystanie biblioteki Numpy oraz funkcji sawtooth oraz square z biblioteki SciPy pozwoliła na łatwą implementację sygnałów wejściowych.
+Użycie biblioteki control pozwoliło na proste utworzenie transmitancji badanego układu oraz przekształcenie jej do modelu stanowego. W zasadzie jedyne ograniczenie w tworzeniu transmitancji obiektu i sterownika leży aktualnie w liczbie argumentów przyjmowanych przez funkcje run\_simulation (co można łatwo zmienić).
+Dodatkowo fakt wykorzystania metody Tustina do rozwiązywania równań stanu pozwala na implementację innych sygnałów wejściowych, które posiadają miejsca nieciągłości(tak jak np. w przypadku sygnału prostokątnego) co byłoby problematyczne w przypadku zastosowania np, metody Taylora.
+Zastosowanie modelu stanowego umożliwia również na łatwe rozszerzenie projektu o dodatkowe funkcjonalności jak np. dodanie elementów nieliniowych lub liczenie czy wykreślanie również sygnałów wewnętrznych układu(oczywiście wymagało by to przebudowy pętli realizującej symulacje tak aby liczyła stan każdego elementu układu).   
 
 
 

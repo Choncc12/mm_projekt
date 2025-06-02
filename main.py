@@ -5,10 +5,6 @@ def run_simulation(a1, a0, b2, b1, b0, Kp, Ki, signal_type, f, phi, tmax, dt,):
     from scipy.signal import sawtooth
     
 
-
-
-
-
     Gp_licznik = [a1, a0]
     Gp_mianownik = [b2, b1, b0]
     Gp = ct.tf(Gp_licznik, Gp_mianownik)
@@ -54,7 +50,7 @@ def run_simulation(a1, a0, b2, b1, b0, Kp, Ki, signal_type, f, phi, tmax, dt,):
     else:
         raise ValueError("Nieznany typ sygnału wejściowego")
     
-    # Inicjalizacja sygnałów
+  
     input_signal = U   
     output_signal = []
     
