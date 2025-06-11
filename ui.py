@@ -11,13 +11,11 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Symulacja Układu - Parametry")
 
-        # Główne okno
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
         layout = QVBoxLayout()
         central_widget.setLayout(layout)
 
-        # Parametry wejściowe
         input_layout = QGridLayout()
         layout.addLayout(input_layout)
 
@@ -43,7 +41,7 @@ class MainWindow(QMainWindow):
         input_layout.addWidget(self.signal_type_combo, 4, 1)
 
         input_layout.addWidget(QLabel("Częstotliwość sygnału [Hz]:"), 5, 0)
-        self.freq_input = QLineEdit("100.0")
+        self.freq_input = QLineEdit("10.0")
         input_layout.addWidget(self.freq_input, 5, 1)
 
         input_layout.addWidget(QLabel("Faza sygnału [rad]:"), 6, 0)
@@ -58,18 +56,17 @@ class MainWindow(QMainWindow):
         self.dt_input = QLineEdit("0.01")
         input_layout.addWidget(self.dt_input, 8, 1)
 
-        # Przycisk do uruchomienia symulacji
         self.run_button = QPushButton("Uruchom symulację")
         layout.addWidget(self.run_button)
         self.run_button.clicked.connect(self.run_simulation)
 
-        # Wykresy
+
         self.figure = Figure()
         self.canvas = FigureCanvas(self.figure)
         layout.addWidget(self.canvas)
 
     def run_simulation(self):
-        # Pobieranie danych z pól tekstowych
+ 
         a1, a0 = map(float, self.gp_licznik_input.text().split(","))
         b2, b1, b0 = map(float, self.gp_mianownik_input.text().split(","))
         kp = float(self.kp_input.text())
@@ -80,11 +77,9 @@ class MainWindow(QMainWindow):
         tmax = float(self.tmax_input.text())
         dt = float(self.dt_input.text())
 
-        # Przekazywanie danych do main.py
         from main import run_simulation
         time, input_signal, output_signal = run_simulation(a1, a0, b2, b1, b0, kp, ki, signal_type, freq, phase, tmax, dt)
 
-        # Rysowanie wykresów
         self.figure.clear()
         ax = self.figure.add_subplot(111)
         ax.plot(time, input_signal, label="Sygnał wejściowy")
@@ -94,7 +89,6 @@ class MainWindow(QMainWindow):
         ax.legend()
         self.canvas.draw()
 
-# Uruchamianie aplikacji
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()

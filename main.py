@@ -1,31 +1,38 @@
 def run_simulation(a1, a0, b2, b1, b0, Kp, Ki, signal_type, f, phi, tmax, dt,):
     import numpy as np
     import control as ct
-    from scipy.signal import square
-    from scipy.signal import sawtooth
-    
+    from scipy.signal import square, sawtooth
+
+    #TODO: samodzielne wyprowadznie macierzy A, B, C, D(na kartce) 
 
     Gp_licznik = [a1, a0]
-    Gp_mianownik = [b2, b1, b0]
-    Gp = ct.tf(Gp_licznik, Gp_mianownik)
+    Gp_mianownik = [b2, b1, b0]    
+    
     Gc_licznik = [Kp, Ki]
     Gc_mianownik = [1, 0]  
 
+    Go_licznik = np.polymul(Gc_licznik, Gp_licznik)
+    Go_mianownik = np.polymul(Gc_mianownik, Gp_mianownik)
 
-    Gc = ct.tf(Gc_licznik, Gc_mianownik)
-    Go = ct.series(Gc, Gp)
-    Gz = ct.feedback(Go, 1)
-    
-    if max(np.roots(Gz.den[0][0])) < 0:
+    feedback_licznik = Go_licznik
+    feedback_mianownik = np.polyadd(Go_mianownik, Go_licznik)
+
+
+    if max(np.roots(feedback_mianownik)) < 0:
         print("Układ jest stabilny")
 
- 
-    ss_model = ct.tf2ss(Gz)
-    A, B, C, D = ss_model.A, ss_model.B, ss_model.C, ss_model.D
+    A = np.array([[0.0, 1.0, 0.0],
+        [0.0, 0.0, 1.0],
+        [-feedback_mianownik[3] / feedback_mianownik[0], -feedback_mianownik[2] / feedback_mianownik[0], -feedback_mianownik[1] / feedback_mianownik[0]]])
+    B = np.array([[0.0], 
+         [0.0], 
+         [1.0]])
+    C = np.array([[feedback_licznik[2] / feedback_mianownik[0], feedback_licznik[1] / feedback_mianownik[0], feedback_licznik[0] / feedback_mianownik[0]]])
+    D = np.array([0.0])
    
-    T = np.arange(0, tmax, dt) # wektor czasu
+    T = np.arange(0, tmax, dt) 
     
-
+    
     num_elements = len(T)
 
     phi = np.radians(phi)  
@@ -36,10 +43,10 @@ def run_simulation(a1, a0, b2, b1, b0, Kp, Ki, signal_type, f, phi, tmax, dt,):
     
     A = dt * A
     B = dt * B
-  
+    
     X = np.zeros((A.shape[0], 1))  
     Xp = np.zeros((A.shape[0], 1))  
-   
+    
     U = np.ones((num_elements, 1))
     if signal_type == 0:  
         U = Usin
@@ -48,22 +55,17 @@ def run_simulation(a1, a0, b2, b1, b0, Kp, Ki, signal_type, f, phi, tmax, dt,):
     elif signal_type == 2:  
         U = Utrojkatny
     else:
-        raise ValueError("Nieznany typ sygnału wejściowego")
+        raise ValueError("Unknown signal type")
     
-  
     input_signal = U   
     output_signal = []
-    
     for i in range(num_elements-1):
-        #krok próbny
         Xp = Xp + A @ Xp + B * U[i]
-        #krok właściwy
-        X = Xp + 0.5 * (A @ X + B * U[i]  + A @ Xp + B * U[i+1])
-        Y = C @ X + D * U[i]
-        output_signal.append(Y.item())  
+        X = Xp + ((A @ X + B * U[i]  + A @ Xp + B * U[i+1])/2)
+        Ystate = C @ X + D * U[i]
+        output_signal.append(Ystate.item())  
  
-    # Dodanie ostatniego punktu do output_signal
-    Y = C @ X + D * input_signal[-1]
-    output_signal.append(Y.item())
+    Ystate = C @ X + D * U[-1]
+    output_signal.append(Ystate.item())
 
     return T, input_signal, output_signal
