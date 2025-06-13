@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.5.30)  2 JUN 2025 19:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.5.30)  13 JUN 2025 18:25
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -389,50 +389,67 @@ LaTeX Font Info:    External font `plex10' loaded for size
 (Font)              <8> on input line 23.
 LaTeX Font Info:    External font `plex10' loaded for size
 (Font)              <6> on input line 23.
-<wykres2.png, id=35, 316.93407pt x 207.77625pt>
-File: wykres2.png Graphic file (type png)
-<use wykres2.png>
-Package pdftex.def Info: wykres2.png  used on input line 48.
-(pdftex.def)             Requested size: 364.19667pt x 238.77911pt.
- [1
-
-{C:/Users/barte/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/barte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/pl/plrm.enc}{C:/Users/barte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/pl/plmi.enc}]
-<model.png, id=49, 475.02469pt x 38.39343pt>
-File: model.png Graphic file (type png)
-<use model.png>
-Package pdftex.def Info: model.png  used on input line 54.
-(pdftex.def)             Requested size: 364.19667pt x 29.43706pt.
-<pentla.png, id=50, 482.55281pt x 225.09094pt>
-File: pentla.png Graphic file (type png)
-<use pentla.png>
-Package pdftex.def Info: pentla.png  used on input line 60.
-(pdftex.def)             Requested size: 364.19667pt x 169.88937pt.
-<wykres1.png, id=51, 610.53094pt x 731.73375pt>
-File: wykres1.png Graphic file (type png)
-<use wykres1.png>
-Package pdftex.def Info: wykres1.png  used on input line 67.
-(pdftex.def)             Requested size: 364.19667pt x 436.50911pt.
+<wyp.jpg, id=35, 2312.64pt x 3079.505pt>
+File: wyp.jpg Graphic file (type jpg)
+<use wyp.jpg>
+Package pdftex.def Info: wyp.jpg  used on input line 37.
+(pdftex.def)             Requested size: 364.19667pt x 484.93063pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<wykres3.png, id=52, 436.63126pt x 548.0475pt>
+<wykres2.png, id=36, 316.93407pt x 207.77625pt>
+File: wykres2.png Graphic file (type png)
+<use wykres2.png>
+Package pdftex.def Info: wykres2.png  used on input line 54.
+(pdftex.def)             Requested size: 364.19667pt x 238.77911pt.
+[1
+
+{C:/Users/barte/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/barte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/pl/plrm.enc}{C:/Users/barte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/pl/plmi.enc}]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<model.png, id=50, 475.02469pt x 38.39343pt>
+File: model.png Graphic file (type png)
+<use model.png>
+Package pdftex.def Info: model.png  used on input line 60.
+(pdftex.def)             Requested size: 364.19667pt x 29.43706pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<pentla.png, id=51, 482.55281pt x 225.09094pt>
+File: pentla.png Graphic file (type png)
+<use pentla.png>
+Package pdftex.def Info: pentla.png  used on input line 66.
+(pdftex.def)             Requested size: 364.19667pt x 169.88937pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<wykres1.png, id=52, 610.53094pt x 731.73375pt>
+File: wykres1.png Graphic file (type png)
+<use wykres1.png>
+Package pdftex.def Info: wykres1.png  used on input line 73.
+(pdftex.def)             Requested size: 364.19667pt x 436.50911pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<wykres3.png, id=53, 436.63126pt x 548.0475pt>
 File: wykres3.png Graphic file (type png)
 <use wykres3.png>
-Package pdftex.def Info: wykres3.png  used on input line 73.
+Package pdftex.def Info: wykres3.png  used on input line 79.
 (pdftex.def)             Requested size: 364.19667pt x 457.12883pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<wykres5.png, id=53, 438.8897pt x 552.56438pt>
+<wykres5.png, id=54, 438.8897pt x 552.56438pt>
 File: wykres5.png Graphic file (type png)
 <use wykres5.png>
-Package pdftex.def Info: wykres5.png  used on input line 79.
+Package pdftex.def Info: wykres5.png  used on input line 85.
 (pdftex.def)             Requested size: 364.19667pt x 458.53557pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[2 <./wykres2.png> <./model.png> <./pentla.png>] [3 <./wykres1.png>] [4 <./wykres3.png>] [5 <./wykres5.png>] (raport.aux)
+[2 <./wyp.jpg>] [3 <./wykres2.png> <./model.png> <./pentla.png>] [4 <./wykres1.png>] [5 <./wykres3.png>] [6 <./wykres5.png>] (raport.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
@@ -441,17 +458,17 @@ Package rerunfilecheck Info: File `raport.out' has not changed.
 (rerunfilecheck)             Checksum: CA042D166813960C93CC45BB6124313E;1033.
  ) 
 Here is how much of TeX's memory you used:
- 9889 strings out of 474486
- 153995 string characters out of 5743755
+ 9898 strings out of 474486
+ 154106 string characters out of 5743755
  1935542 words of memory out of 5000000
- 32028 multiletter control sequences out of 15000+600000
+ 32035 multiletter control sequences out of 15000+600000
  567866 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,6n,79p,405b,467s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\barte\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/barte/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plbx12.pfb><C:/Users/barte/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plmi12.pfb><C:/Users/barte/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plmi8.pfb><C:/Users/barte/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plr12.pfb><C:/Users/barte/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plr17.pfb><C:/Users/barte/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plr8.pfb>
-Output written on raport.pdf (5 pages, 253504 bytes).
+Output written on raport.pdf (6 pages, 553039 bytes).
 PDF statistics:
- 120 PDF objects out of 1000 (max. 8388607)
- 20 named destinations out of 1000 (max. 500000)
- 95 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 126 PDF objects out of 1000 (max. 8388607)
+ 22 named destinations out of 1000 (max. 500000)
+ 100 words of extra memory for PDF output out of 10000 (max. 10000000)
 

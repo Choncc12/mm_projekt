@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1748885846.18881 "c:/Users/barte/source/repos/mm_projekt/raport.tex" "raport.pdf" "raport" 1748885846.92097 0
+["pdflatex"] 1749831936.41725 "c:/Users/barte/source/repos/mm_projekt/raport.tex" "raport.pdf" "raport" 1749831937.16439 0
   "C:/Users/barte/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1748638379 86553 91af261fa287312f2fb1f66a097366be ""
   "C:/Users/barte/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1200.pk" 1748640218 14064 f80d69e8d07333734fe3519d6df486f9 ""
   "C:/Users/barte/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1748638341 24225046 b9e10b09cbf37383786e77773ce81864 ""
@@ -86,16 +86,17 @@
   "C:/Users/barte/AppData/Local/Programs/MiKTeX/tex/latex/refcount/refcount.sty" 1576433952 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
   "C:/Users/barte/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1657800696 9714 ba3194bd52c8499b3f1e3eb91d409670 ""
   "C:/Users/barte/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/barte/source/repos/mm_projekt/raport.tex" 1748885845 4199 6893417589c4ffff24d7946987290d22 ""
+  "c:/Users/barte/source/repos/mm_projekt/raport.tex" 1749831933 4368 40b0c86bbfd5cf2e4cbf9aad25c7b0cc ""
   "model.png" 1748687590 6015 11188eaa1e1bbf71d7fa8bd55ddbdde6 ""
   "pentla.png" 1748687786 26686 2ae95ced10413fce48b16cb2b2711a1c ""
-  "raport.aux" 1748885846 2318 7167bebed397ba96f36a00f3fba12ba6 "pdflatex"
-  "raport.out" 1748885846 1033 ca042d166813960c93cc45bb6124313e "pdflatex"
-  "raport.tex" 1748885845 4199 6893417589c4ffff24d7946987290d22 ""
+  "raport.aux" 1749831937 2478 1bdb4f8e2325aea11e6de6f69d326405 "pdflatex"
+  "raport.out" 1749831937 1033 ca042d166813960c93cc45bb6124313e "pdflatex"
+  "raport.tex" 1749831933 4368 40b0c86bbfd5cf2e4cbf9aad25c7b0cc ""
   "wykres1.png" 1748639780 82202 ea280b055e0ad5b5b82237b25828a09e ""
   "wykres2.png" 1748687219 16924 1e36738cf540c8bbdceec5ba41d8706f ""
   "wykres3.png" 1748688444 48204 eff002899e4c20f534738e18fda33107 ""
   "wykres5.png" 1748688972 63625 39434cc983df49a8d058c74f535b07e6 ""
+  "wyp.jpg" 1749831737 298595 6d9b388ee2a0e0ae0428c34093642012 ""
   (generated)
   "raport.aux"
   "raport.log"
